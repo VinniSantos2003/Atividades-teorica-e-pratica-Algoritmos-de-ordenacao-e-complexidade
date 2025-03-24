@@ -1,0 +1,30 @@
+Atividades teórica e prática: Algoritmos de ordenação e complexidade
+
+Atividade composta de teoria e prática: Algoritmos de ordenação e complexidade:
+
+---
+
+Atividade composta de teoria e prática. Veja:
+
+> Teoria: 
+
+Considere:
+
+- Ordenação simples (elementares): Bubble Sort, Insert Sort e Selection Sort.
+
+- Ordenação avançada (eficientes): Quick Sort, Shell Sort, Merge Sort, Radix Sort.
+
+ Documente seu estudo sobre o funcionamento teórico e análise de complexidade (Big O) para os algoritmos de ordenação citados acima. Cada algoritmo de ordenação em análise deve ser idêntico ao aplicado na atividade prática (descrita a seguir). A ideia é corroborar maiores tempos na execução da prática aos algoritmos de maior complexidade.
+
+> Prática: 
+
+Desenvolver um (1) programa (OO em Ling. C++) que permita ao usuário escolher o tamanho (quantidade) de elementos de um vetor (dinâmico, indexado). Logo, o programa deve preencher o vetor recém-alocado com valores float, limitados a 1 casa decimal, aleatórios (gerando um vetor desordenado). 
+
+Em seguida, o programa usa este vetor aleatório para aplicar TODOS os algoritmos de ordenação acima (preserve o vetor original, crie cópia se necessário, pois o mesmo vetor desordenado precisa ser aplicado a cada algoritmo de ordenação). Logo, compute o tempo de execução de cada algoritmo de ordenação para o mesmo vetor de origem (basta computar a diferença entre tempos inicial e final de cada função de algoritmo, pesquise pela biblioteca C time C++, <time>, <ctime>, p. ex.).  Crie também uma opção para que o usuário possa escolher ver ou não as saídas ordenadas de cada algoritmo. Veja que os tempos a serem computados são apenas de cada método pertinente à ordenação, excetuando-se mensagens de tela e/ou recursos acessórios.
+
+Obs.1: ao aumentar o tamanho (quantidade) grande de dados aleatórios, há tendência de obter maiores tempos de execução dos algoritmos. Manipule unidade de tempo adequadamente entre mili ou microsegundos para fins de apresentação de resultados.
+
+Obs.2: Leitura recomendada: Cap. 9 (Ordenação) - livro-base (Adam Drozdek). 
+
+
+>> Enviar aquivo ZIP com material de resposta (pasta de prj. prático + PDF documentação)
