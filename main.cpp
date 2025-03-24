@@ -16,7 +16,7 @@ int main(){
     bool imprimirOrdenado;
     char escolha;
     int tamanhoVetor;
-    clock_t *inicioTempoQuickSort,*fimTempoQuickSort,*inicioTempoMergeSort,*fimTempoMergeSort;
+    clock_t inicioTempoQuickSort,fimTempoQuickSort,inicioTempoMergeSort,fimTempoMergeSort;
 
     cout << "Insira o tamanho do vetor desejado: ";
     cin >> tamanhoVetor;
@@ -41,16 +41,23 @@ int main(){
     A->InsertSort(vetor,tamanhoVetor,imprimirOrdenado);
     A->SelectionSort(vetor,tamanhoVetor,imprimirOrdenado);
 
-    A->QuickSort(vetor,0,tamanhoVetor,inicioTempoQuickSort,fimTempoQuickSort);
+    float* vetorQuickSort = A->copiarVetor(vetor,tamanhoVetor);
+    inicioTempoQuickSort = clock();
+    A->QuickSort(vetorQuickSort,0,tamanhoVetor);
+    fimTempoQuickSort = clock();
     A->mostrarIntervalo(inicioTempoQuickSort,fimTempoQuickSort,"QuickSort");
-    /*
-    A contagem de tempo do quicksort foi feito de maneira diferente pois é uma função recursiva, 
-    então haveria muitas instancias de contagem de inicio e fim, escolhi criar um ponteiro que pode ser acessado por todas as funções
-    que serão abertas
-    */
-    A->ShellSort(vetor,tamanhoVetor);
-    A->MergeSort(vetor,aux,0,tamanhoVetor,inicioTempoMergeSort,fimTempoMergeSort); 
+    free(vetorQuickSort);
+
+    A->ShellSort(vetor,tamanhoVetor,imprimirOrdenado);
+
+    float* vetorMergeSort = A->copiarVetor(vetor,tamanhoVetor);
+    inicioTempoMergeSort = clock();
+    A->MergeSort(vetorMergeSort,aux,0,tamanhoVetor);
+    fimTempoMergeSort = clock(); 
     A->mostrarIntervalo(inicioTempoMergeSort,fimTempoMergeSort,"MergeSort");
+    free(vetorMergeSort);
+    
+    A->RadixSort(vetor,tamanhoVetor,imprimirOrdenado);
 
     return 0;
 }
