@@ -4,10 +4,42 @@ using namespace std;
 
 
 algoritmos::algoritmos(/* args */){
+    vetorNaoOrdenada = NULL;
+    tamanho = 0;
 }
 
 algoritmos::~algoritmos(){
 }
+
+void algoritmos::setTamanho(int tamanho){
+    this->tamanho = tamanho;
+}
+
+int algoritmos::getTamanho(){
+    return this->tamanho;
+}
+
+float * algoritmos::getVetorNaoOrdenada(){
+    return this->vetorNaoOrdenada;
+}
+
+void algoritmos::setVetorNaoOrdenada(float * vetor){
+    this->vetorNaoOrdenada = vetor;
+}
+float * algoritmos::gerarLista(int tamanhoLista){
+    float * listaAleatoria = new float[tamanhoLista];
+    for(int i = 0; i < tamanhoLista;i++){
+        listaAleatoria[i] = gerarNumeroAleatorio(0.0f,1000.0f);
+    }
+    return listaAleatoria;
+}
+
+float algoritmos::gerarNumeroAleatorio(float min,float max){
+    float numero = min + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX) / (max - min));
+    // Arredondar para 1 casa decimal
+    return floor(numero * 10.0f + 0.5f) / 10.0f;
+}
+
 float * algoritmos::copiarVetor(float *vetor,int tamanhoVetor){
     float* vetorCopia = new float[tamanhoVetor];
     for(int i = 0;i<tamanhoVetor;i++){
@@ -15,24 +47,23 @@ float * algoritmos::copiarVetor(float *vetor,int tamanhoVetor){
     }
     return vetorCopia;
 }
+
 void algoritmos::mostrarIntervalo(clock_t *inicioTempo,clock_t *fimTempo,char* algoritmo){
-    float intervalo = float(fimTempo - inicioTempo)/ CLOCKS_PER_SEC;
-    cout << fixed << setprecision(6);
-    cout << endl << "Tempo de ordenacao do " << algoritmo << " : " << intervalo << endl;
-}
-void algoritmos::mostrarIntervalo(clock_t inicioTempo,clock_t fimTempo, char* algoritmo){
     double intervalo = double(fimTempo -inicioTempo ) / CLOCKS_PER_SEC;
-    cout << fixed << setprecision(6);
-    cout << endl << "Tempo de ordenacao do " << algoritmo << " : " << intervalo << endl;
+    //cout << fixed << setprecision(6);
+    cout << endl << "Tempo de ordenacao(em milisegundos) do " << algoritmo << " : " << intervalo*1000.0 << endl;
 }
 
-void algoritmos::BubbleSort(float *vetor,int tamanhoVetor ,bool saidaOrdenada){
+void algoritmos::mostrarIntervalo(clock_t inicioTempo,clock_t fimTempo, char* algoritmo){
+    double intervalo = double(fimTempo -inicioTempo ) / CLOCKS_PER_SEC;
+    //cout << fixed << setprecision(6);
+    cout << endl << "Tempo de ordenacao(em milisegundos) do " << algoritmo << " : " << intervalo*1000.0 << endl;
+}
+
+void algoritmos::BubbleSort(float *vetor,int tamanhoVetor ){
     //Fonte do código: https://www.dio.me/articles/algoritmo-bubble-sort-comentado
     int i, j; 
-    float vetorCopia[tamanhoVetor];
-    for(i = 0; i<tamanhoVetor;i++){
-        vetorCopia[i] = vetor[i];
-    }
+    float *vetorCopia = copiarVetor(vetor,this->tamanho);
     
     //Inicio da ordenação
     clock_t inicio = clock();
@@ -46,27 +77,17 @@ void algoritmos::BubbleSort(float *vetor,int tamanhoVetor ,bool saidaOrdenada){
         }
     }
     clock_t fim = clock();
-    
     //Fim da ordenação
-    if(saidaOrdenada){//Mostra o vetor ordenado ou não
-        cout << "Vetor do Buuble sort: " <<endl;
-        cout << fixed << setprecision(1);
-        for(i = 0; i<tamanhoVetor;i++){
-            cout << vetorCopia[i] << "-";
-        }
-    }
+
     free(vetorCopia);
     mostrarIntervalo(inicio,fim,"BubbleSort");
     
 }
 
-void algoritmos::InsertSort(float *vetor,int tamanhoVetor,bool saidaOrdenada){
+void algoritmos::InsertSort(float *vetor,int tamanhoVetor){
     //Fonte do código: https://www.geeksforgeeks.org/cpp-program-for-insertion-sort/
     int i;
-    float vetorCopia[tamanhoVetor];
-    for(i = 0; i<tamanhoVetor;i++){
-        vetorCopia[i] = vetor[i];
-    }
+    float *vetorCopia = copiarVetor(vetor,this->tamanho);
     //Inicio da ordenação
     clock_t inicio  = clock();
     for (i = 1; i < tamanhoVetor; ++i) {
@@ -83,27 +104,18 @@ void algoritmos::InsertSort(float *vetor,int tamanhoVetor,bool saidaOrdenada){
         vetorCopia[j + 1] = key;
     }
     clock_t fim = clock();
-    
     //Fim da ordenação
-    if(saidaOrdenada){//Mostra o vetor ordenado ou não
-        cout << "Vetor do InsertSort: " << endl;
-        cout << fixed << setprecision(1);
-        for(i = 0; i<tamanhoVetor;i++){
-            cout << vetorCopia[i] << "-";
-        }
-    }
+
     free(vetorCopia);
     mostrarIntervalo(inicio,fim,"InsertSort");
 }
 
-void algoritmos::SelectionSort(float *vetor,int tamanhoVetor,bool saidaOrdenada){
+void algoritmos::SelectionSort(float *vetor,int tamanhoVetor){
     //Fonte do Código: https://pt.wikipedia.org/wiki/Selection_sort
     float aux;
     int i,j,k;
-    float vetorCopia[tamanhoVetor];
-    for(i = 0; i<tamanhoVetor;i++){
-        vetorCopia[i] = vetor[i];
-    }
+    float *vetorCopia = copiarVetor(vetor,this->tamanho);
+
     //Inicio da ordenaçao
     clock_t inicio  = clock();
     for ( i = 0; i < tamanhoVetor; ++i) {
@@ -119,23 +131,13 @@ void algoritmos::SelectionSort(float *vetor,int tamanhoVetor,bool saidaOrdenada)
     }
     clock_t fim = clock();
     //Fim da ordenaçao
-    if(saidaOrdenada){//Mostra o vetor ordenado ou não
-        cout << "Vetor do SelectionSort: " << endl;
-        cout << fixed << setprecision(1);
-        for(i = 0; i<tamanhoVetor;i++){
-            cout << vetorCopia[i] << "-";
-        }
-    }
     free(vetorCopia);
     mostrarIntervalo(inicio,fim,"SelectionSort");
 }
 
 void algoritmos::QuickSort(float *vetor,int inicio,int fim){
     //Fonte do código: https://pt.wikipedia.org/wiki/Quicksort
-    /*float vetorCopia[fim];
-    for(int i = 0; i<fim;i++){
-        vetorCopia[i] = vetor[i];
-    }*/
+
     if (inicio >= fim - 1) return; // Caso base: array de 1 ou 0 elementos já está ordenado
 
     int i = inicio, j = fim - 1;
@@ -169,15 +171,12 @@ void algoritmos::QuickSort(float *vetor,int inicio,int fim){
 
 }
 
-void algoritmos::ShellSort(float *vetor,int tamanhoVetor,bool saidaOrdenada){
+void algoritmos::ShellSort(float *vetor,int tamanhoVetor){
     //Fonte : https://pt.wikipedia.org/wiki/Shell_sort
     int h = 1;
     int i, j;
     int rep = 0;
-    float vetorCopia[tamanhoVetor];
-    for(int i = 0; i<tamanhoVetor;i++){
-        vetorCopia[i] = vetor[i];
-    }
+    float *vetorCopia = copiarVetor(vetor,this->tamanho);
     //Inicio do código
     clock_t inicio = clock();
     while (h < tamanhoVetor) {
@@ -201,13 +200,7 @@ void algoritmos::ShellSort(float *vetor,int tamanhoVetor,bool saidaOrdenada){
         }
     }
     clock_t fim = clock();
-    if(saidaOrdenada){//Mostra o vetor ordenado ou não
-        cout << "Vetor do ShellSort: " << endl;
-        cout << fixed << setprecision(1);
-        for(i = 0; i<tamanhoVetor;i++){
-            cout << vetorCopia[i] << "-";
-        }
-    }
+
     free(vetorCopia);
     mostrarIntervalo(inicio,fim,"ShellSort");
 }
@@ -265,15 +258,13 @@ void algoritmos::merge(float* vetor, float * aux,int inicio,int meio,int fim){
     
 }
 
-void algoritmos::RadixSort(float *vetor, int tamanhoVetor,bool saidaOrdenada) {
+void algoritmos::RadixSort(float *vetor, int tamanhoVetor) {
     int i;
     float* b = new float[tamanhoVetor]; // Alocação dinâmica de memória para o array b
     int maior = vetor[0];
     int exp = 1;
-    float vetorCopia[tamanhoVetor];
-    for(i = 0; i<tamanhoVetor;i++){
-        vetorCopia[i] = vetor[i];
-    }
+    float *vetorCopia = copiarVetor(vetor,this->tamanho);
+
     clock_t inicio = clock();
     for (i = 0; i < tamanhoVetor; i++) {
         if (vetorCopia[i] > maior)
@@ -294,13 +285,7 @@ void algoritmos::RadixSort(float *vetor, int tamanhoVetor,bool saidaOrdenada) {
         delete[] bucket; // Liberação da memória alocada para bucket
     }
     clock_t fim = clock();
-    if(saidaOrdenada){//Mostra o vetor ordenado ou não
-        cout << fixed << setprecision(1);
-        cout << "Vetor RadixSort: " << endl;
-        for(i = 0; i<tamanhoVetor;i++){
-            cout << vetorCopia[i] << "-";
-        }
-    }
+
     mostrarIntervalo(inicio,fim,"RadixSort");
     delete[] b; // Liberação da memória alocada para b
 }
